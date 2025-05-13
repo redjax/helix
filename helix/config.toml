@@ -1,0 +1,142 @@
+theme = "dark_plus"
+
+[editor]
+## Enable autocompletion popups
+auto-completion = true
+## Run formatters on save
+auto-format = true
+## Display info boxes
+auto-info = true
+## Enable automatic closing of parentheses, brackets, etc
+auto-pairs = true
+## Show currently open buffers
+bufferline = "multiple"
+## Color mode indicator
+color-modes = true
+##  Enable replacing entire autocomplete word, not just part before cursor
+completion-replace = true
+## Continue commented lines with enter key
+continue-comments = true
+## Highlight all columns with a cursor
+cursorcolumn = false
+## Highlight all lines with a cursor
+cursorline = true
+## Line endings
+#  native (default), lf, crlf, ff, cr, nel
+default-line-ending = "native"
+## Gutters to display
+#  ["diagnostics", "diff", "line-numbers", "spacer"]
+gutters = ["diff", "spacer", "line-numbers", "spacer"]
+## simple (copy indentation from previous line), tree-sitter (compute indentation
+#  based on syntax tree), hybrid (attempt tree-sitter, fallback to simple)
+indent-heuristic = "hybrid"
+## Insert newline at end of file
+insert-final-newline = true
+## Absolute or relative line numbers
+line-number = "absolute"
+## Enable mouse
+mouse = true
+## Support middle click pasting
+middle-click-paste = true
+## Enable path completion
+path-completion = true
+## Draw border around popup, menu, all, or none
+popup-border = "menu"
+## Whether to apply completion item instantly when selected
+preview-completion-insert = true
+## Show a ruler at column 120
+rulers = [120]
+## Shell
+#  Linux
+# shell = ["bash", "-c"]
+#  Windows
+shell = ["pwsh.exe", "-NoLogo", "-NoProfile", "-NoProfileLoadTime", "-Command", "$PSStyle.OutputRendering='PlatinText';"]
+## Force theme to show colors
+true-color = true
+
+[editor.statusline]
+left = ["read-only-indicator", "file-modification-indicator", "mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "|"
+mode.normal = "NOR"
+mode.insert = "INS"
+mode.select = "SEL"
+
+[editor.lsp]
+enable = true
+## Display lsp's window/showMessage below statusline
+display-messages = true
+## Display lsp progress messages below statusline
+display-progress-messages = true
+## Enable auto popup of signature help
+auto-signature-help = true
+display-inlay-hints = true
+## Display docs under signature help popup
+display-signature-help-docs = true
+## Enable snippet completion
+#  Run :config-reload, then run :lsp-restart
+snippets = true
+## Include declaration in goto reference popup
+goto-reference-include-declaration = true
+
+[editor.cursor-shape]
+## Block, bar, underline
+normal = "block"
+insert = "bar"
+select = "block"
+
+[editor.file-picker]
+hidden = true
+follow-symlinks = true
+deduplicate-links = true
+parents = true
+ignore = true
+git-ignore = true
+git-global = true
+git-exclude = true
+
+[editor.auto-save]
+## Save when focus lost
+#  Requires focus event support (https://github.com/helix-editor/helix/wiki/Terminal-Support)
+focus-lost = false
+## Save after delay
+after-delay.enable = false
+## Delay in ms
+after-delay.timeout = 3000
+
+[editor.search]
+smart-case = true
+wrap-around = true
+
+[editor.whitespace]
+## all or none
+#  edit individually in [editor.whitespace.*]
+render = "none"
+
+# [editor.whitespace.render]
+# space = "all"
+# tab = "all"
+# nbsp = "none"
+# nnbsp = "none"
+# newline = "none"
+
+[editor.whitespace.characters]
+space = "Â·"
+nbsp = "â½"
+nnbsp = "â£"
+tab = "â†’"
+newline = "âŽ"
+tabpad = "Â·"
+
+[editor.indent-guides]
+render = true
+character = "|"
+skip-levels = 0
+
+[editor.softwrap]
+enable = true
+max-wrap = 20
+max-indent-retain = 40
+wrap-indicator = ""
+wrap-at-text-width = true
