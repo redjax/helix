@@ -1,4 +1,7 @@
-theme = "dark_plus"
+# theme = "dark_plus"
+# theme = "jellybeans"
+# theme = "dark_plus"
+theme = "onedarker"
 
 [editor]
 ## Enable autocompletion popups
@@ -50,7 +53,7 @@ rulers = [120]
 #  Linux
 # shell = ["bash", "-c"]
 #  Windows
-shell = ["pwsh.exe", "-NoLogo", "-NoProfile", "-NoProfileLoadTime", "-Command", "$PSStyle.OutputRendering='PlatinText';"]
+shell = ["pwsh.exe", "-NoLogo", "-NoProfile", "-NoProfileLoadTime", "-Command", "$PSStyle.OutputRendering='PlainText';"]
 ## Force theme to show colors
 true-color = true
 
@@ -122,21 +125,22 @@ render = "none"
 # newline = "none"
 
 [editor.whitespace.characters]
-space = "Â·"
-nbsp = "â½"
-nnbsp = "â£"
-tab = "â†’"
-newline = "âŽ"
-tabpad = "Â·"
+space = "·"
+nbsp = "⍽"
+nnbsp = "␣"
+tab = "→"
+newline = "⏎"
+tabpad = "·"
 
 [editor.indent-guides]
 render = true
 character = "|"
 skip-levels = 0
 
-[editor.softwrap]
+[editor.soft-wrap]
 enable = true
 max-wrap = 20
 max-indent-retain = 40
 wrap-indicator = ""
 wrap-at-text-width = true
+
