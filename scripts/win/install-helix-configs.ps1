@@ -1,5 +1,10 @@
+Param(
+    [Parameter(Mandatory=$false, HelpMessage="The name of a configuration directory in the configs/ path")]
+    [string]$ConfigName = "default"
+)
+
 ## Define source and destination paths
-$sourceDir = Join-Path "." -ChildPath "helix"
+$sourceDir = Join-Path "." -ChildPath ("configs\" + $ConfigName)
 $helixConfigDir = Join-Path $env:APPDATA "helix"
 
 ## Ensure the destination directory exists
@@ -12,14 +17,14 @@ $filesToCopy = @("config.toml", "languages.toml")
 
 ## Copy files
 foreach ($file in $filesToCopy) {
-    $sourcePath = Join-Path $sourceDir $file
-    $destPath = Join-Path $helixConfigDir $file
+  $sourcePath = Join-Path $sourceDir $file
+  $destPath = Join-Path $helixConfigDir $file
 
-    if (Test-Path $sourcePath) {
-        Copy-Item -Path $sourcePath -Destination $destPath -Force
-        Write-Host "Copied $file to $helixConfigDir" -ForegroundColor Green
-    }
-    else {
-        Write-Host "$file not found in $sourceDir" -ForegroundColor Yellow
-    }
+  if (Test-Path $sourcePath) {
+    Copy-Item -Path $sourcePath -Destination $destPath -Force
+    Write-Host "Copied $file to $helixConfigDir" -ForegroundColor Green
+  }
+  else {
+    Write-Host "$file not found in $sourceDir" -ForegroundColor Yellow
+  }
 }
