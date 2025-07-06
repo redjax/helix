@@ -1,0 +1,98 @@
+---
+## Manually trigger pipeline to create a release with .zip archives of Neovim configurations
+#
+#  This pipeline creates .zip files in a release for every Helix configuration in the config/ directory.
+#  It simply bumps the patch version (v0.0.X) each time.
+#
+#  To create a new major (vX.0.0) or minor (v0.X.0) release, manually create a new .0 tag in the repository.
+#  For example, to move from v0.0.X to v0.1.X, create a tag v0.1.0. You can do this in Github, or create
+#  the tag locally with: git tag v0.1.0 && git push origin v0.1.0
+name: Manual Release
+
+on:
+  ## Trigger workflow manualy
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+
+      ## Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      ## Setup Python in pipeline
+      - name: Set up Python (for version parsing)
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      ## Get the latest tag for version bump
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
+          echo "Latest tag: $LATEST_TAG"
+          echo "latest_tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
+
+      ## Bump patch version (v0.0.X -> v0.0.X+1)
+      - name: Bump patch version
+        id: bump_version
+        run: |
+          LATEST="${{ steps.get_tag.outputs.latest_tag }}"
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${LATEST#v}"
+          NEW_TAG="v$MAJOR.$MINOR.$((PATCH + 1))"
+          echo "New tag: $NEW_TAG"
+          echo "new_tag=$NEW_TAG" >> "$GITHUB_OUTPUT"
+
+      ## Create .zip archives for each helix configuration in the config/ directory.
+      #  Each archive will have a directory helix/ at the root, which can be copied/extracted to
+      #  the path your OS looks for Helix configurations in. For example, on Linux, ~/.config/helix,
+      #  and on Windows, %USERPROFILE%\AppData\Roaming\helix
+      - name: Create zip files
+        id: zip_configs
+        run: |
+          mkdir -p release-assets
+          VERSION="${{ steps.bump_version.outputs.new_tag }}"
+
+          for dir in configs/*/; do
+            name=$(basename "$dir")
+            zipname="${name}-${VERSION}.zip"
+
+            # Create temp/helix/ and copy contents into it
+            mkdir -p temp/helix
+            cp -r "$dir"/* temp/helix/
+
+            # Zip the contents so the archive contains only a 'helix/' folder
+            (
+              cd temp
+              zip -r "../release-assets/${zipname}" nvim -x "*.DS_Store"
+            )
+
+            # Clean up temp for next iteration
+            rm -rf temp
+          done
+
+      ## Create new git tag with patch version, i.e. v0.0.X -> v0.0.X+1
+      #  This creates the tag in Github.
+      - name: Create Git tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "${{ steps.bump_version.outputs.new_tag }}"
+          git push origin "${{ steps.bump_version.outputs.new_tag }}"
+
+      ## Create release from the new tag and autogenerate release notes
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.bump_version.outputs.new_tag }}
+          name: Release ${{ steps.bump_version.outputs.new_tag }}
+          generate_release_notes: true
+          token: ${{ secrets.RELEASE_TOKEN }}
+          files: release-assets/*.zip
