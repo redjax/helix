@@ -53,8 +53,32 @@ paramName = "All"
 paramType = true
 await = true
 
+[[language]]
+name = "go"
+language-servers = ["gopls", "golangci-lint-lsp"]
+auto-format = true
+
 [language-server.gopls]
 command = "gopls"
+
+[language-server.gopls.config]
+usePlaceholders = true
+staticcheck = true
+gofumpt = true
+
+[language-server.gopls.config.formatting]
+local = ""
+gofumpt = true
+
+[language-server.gopls.config.ui.completion]
+import_shortcut = true
+
+[language-server.gopls.config.ui.quickfix]
+show_docs = true
+
+[language-server.gopls.config.ui]
+semantic_tokens = true
+
 
 [language-server.gopls.config.hints]
 assignVariableTypes = true
@@ -317,6 +341,7 @@ auto-format = true
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 language-servers = ["gopls", "golangci-lint-lsp"]
+formatter = { command = "goimports" }
 # TODO: gopls needs utf-8 offsets?
 indent = { tab-width = 4, unit = "\t" }
 
