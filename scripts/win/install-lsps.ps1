@@ -5,13 +5,13 @@ $NpmLsps = @(
     "npm i -g vscode-langservers-extracted",
     "npm install -g dockerfile-language-server-nodejs",
     "npm install -g @microsoft/compose-language-service",
-    "npm i -g vscode-langservers-extracted",
     "npm install pyright -g",
-    "npm i -g vscode-langservers-extracted",
     "npm i -g sql-language-server",
     "npm i -g @tailwindcss/language-server",
     "npm i -g @vue/language-server",
+    "npm i -g svelte-language-server",
     "npm i -g prettier",
+    "npm i -g prettier-plugin-svelte",
     "npm i -g yaml-language-server@next",
     "npm install -g typescript typescript-language-server",
     "npm install -g intelephense"
@@ -42,13 +42,15 @@ $PipLsps = @(
 
 ## LSPs installable with pipx
 $PipxLsps = @(
+    "pipx install jedi-language-server",
     "pipx install python-lsp-server",
     "pipx inject python-lsp-server python-lsp-ruff python-lsp-black"
 )
 
 ## LSPs installable with rustup
 $RustLsps = @(
-    "rustup component add rust-analyzer"
+    "rustup component add rust-analyzer",
+    "rustup component add rustfmt"
 )
 
 ## LSPs installable with cargo
@@ -57,7 +59,10 @@ $CargoLsps = @(
 )
 
 ## LSPs installable with dotnet
-$DotnetLsps = @()
+$DotnetLsps = @(
+    # OmniSharp requires manual installation from: https://github.com/OmniSharp/omnisharp-roslyn/releases
+    # Or install via scoop: scoop install omnisharp
+)
 
 ## Array of tools to check installation status for
 $tools = @("npm", "cargo", "rustup", "dotnet", "pip", "pipx")

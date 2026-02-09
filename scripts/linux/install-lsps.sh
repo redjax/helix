@@ -1,6 +1,4 @@
-#!/bin/bash
-
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Define LSP install commands for each tool
 npm_lsps=(
@@ -13,7 +11,9 @@ npm_lsps=(
     "npm install -g sql-language-server"
     "npm install -g @tailwindcss/language-server"
     "npm install -g @vue/language-server"
+    "npm install -g svelte-language-server"
     "npm install -g prettier"
+    "npm install -g prettier-plugin-svelte"
     "npm install -g yaml-language-server@next"
     "npm install -g typescript typescript-language-server"
     "npm install -g intelephense"
@@ -34,12 +34,14 @@ pip_lsps=(
 )
 
 pipx_lsps=(
+    "pipx install jedi-language-server"
     "pipx install python-lsp-server"
     "pipx inject python-lsp-server python-lsp-ruff python-lsp-black"
 )
 
 rustup_lsps=(
     "rustup component add rust-analyzer"
+    "rustup component add rustfmt"
 )
 
 cargo_lsps=(
@@ -47,7 +49,8 @@ cargo_lsps=(
 )
 
 dotnet_lsps=(
-    # Add dotnet LSPs here if needed
+    # OmniSharp requires manual installation: https://github.com/OmniSharp/omnisharp-roslyn/releases
+    # Download and extract to ~/.local/bin/omnisharp or /usr/local/bin/omnisharp
 )
 
 tools=("npm" "go" "cargo" "rustup" "dotnet" "pip" "pipx")

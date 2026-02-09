@@ -37,6 +37,13 @@ vscode-json-language-server = { command = "vscode-json-language-server", args = 
     "--stdio",
 ], config = { provideFormatter = true, json = { validate = { enable = true } } } }
 yaml-language-server = { command = "yaml-language-server", args = ["--stdio"] }
+svelte-language-server = { command = "svelteserver", args = ["--stdio"] }
+tailwindcss-language-server = { command = "tailwindcss-language-server", args = ["--stdio"] }
+
+[language-server.typescript-language-server]
+command = "typescript-language-server"
+args = ["--stdio"]
+config = { hostInfo = "helix" }
 
 [language-server.ansible-language-server]
 command = "ansible-language-server"
@@ -451,6 +458,8 @@ roots = ["package.json"]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "babel"] }
 indent = { tab-width = 2, unit = "  " }
 
 [language.debugger]
@@ -470,13 +479,68 @@ name = "javascript"
 source = { git = "https://github.com/tree-sitter/tree-sitter-javascript", rev = "f772967f7b7bc7c28f845be2420a38472b16a8ee" }
 
 [[language]]
+name = "typescript"
+scope = "source.ts"
+injection-regex = "(ts|typescript)"
+language-id = "typescript"
+file-types = ["ts", "mts", "cts"]
+shebangs = []
+roots = ["package.json", "tsconfig.json"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "typescript"
+source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf", subpath = "typescript" }
+
+[[language]]
+name = "tsx"
+scope = "source.tsx"
+injection-regex = "(tsx)"
+language-id = "typescriptreact"
+file-types = ["tsx"]
+roots = ["package.json", "tsconfig.json"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "tsx"
+source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf", subpath = "tsx" }
+
+[[language]]
+name = "svelte"
+scope = "source.svelte"
+injection-regex = "svelte"
+file-types = ["svelte"]
+roots = ["package.json", "svelte.config.js"]
+comment-token = "//"
+block-comment-tokens = { start = "<!--", end = "-->" }
+language-servers = ["svelte-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--plugin", "prettier-plugin-svelte", "--parser", "svelte"] }
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "svelte"
+source = { git = "https://github.com/tree-sitter-grammars/tree-sitter-svelte", rev = "c922ee43255949555a6a15854d20a79c2fe2422d" }
+
+[[language]]
 name = "css"
 scope = "source.css"
 injection-regex = "css"
 file-types = ["css"]
 block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = ["vscode-css-language-server"]
+language-servers = ["vscode-css-language-server", "tailwindcss-language-server"]
 auto-format = true
+formatter = { command = "prettier", args = ["--parser", "css"] }
 indent = { tab-width = 2, unit = "  " }
 
 [[grammar]]
@@ -484,13 +548,29 @@ name = "css"
 source = { git = "https://github.com/tree-sitter/tree-sitter-css", rev = "769203d0f9abe1a9a691ac2b9fe4bb4397a73c51" }
 
 [[language]]
+name = "jsx"
+scope = "source.jsx"
+injection-regex = "jsx"
+language-id = "javascriptreact"
+file-types = ["jsx"]
+roots = ["package.json"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+language-servers = ["typescript-language-server"]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "babel"] }
+indent = { tab-width = 2, unit = "  " }
+grammar = "javascript"
+
+[[language]]
 name = "scss"
 scope = "source.scss"
 injection-regex = "scss"
 file-types = ["scss"]
 block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = ["vscode-css-language-server"]
+language-servers = ["vscode-css-language-server", "tailwindcss-language-server"]
 auto-format = true
+formatter = { command = "prettier", args = ["--parser", "scss"] }
 indent = { tab-width = 2, unit = "  " }
 
 [[grammar]]
@@ -516,8 +596,9 @@ file-types = [
     "cshtml",
 ]
 block-comment-tokens = { start = "<!--", end = "-->" }
-language-servers = ["vscode-html-language-server", "superhtml"]
+language-servers = ["vscode-html-language-server", "tailwindcss-language-server"]
 auto-format = true
+formatter = { command = "prettier", args = ["--parser", "html"] }
 indent = { tab-width = 2, unit = "  " }
 
 [[grammar]]
@@ -546,9 +627,11 @@ file-types = [
     { glob = "*sconstruct" },
 ]
 shebangs = ["python", "uv"]
-roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
+roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json", "requirements.txt"]
 comment-token = "#"
 language-servers = ["ruff", "jedi", "pylsp"]
+auto-format = true
+formatter = { command = "ruff", args = ["format", "-"] }
 # TODO: pyls needs utf-8 offsets
 indent = { tab-width = 4, unit = "    " }
 
