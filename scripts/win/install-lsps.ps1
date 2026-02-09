@@ -37,12 +37,12 @@ $ScoopLsps = @(
 ## LSPs installable with pip
 $PipLsps = @(
     "pip install ruff-lsp",
-    "pip install ruff",
-    "pip install jedi-language-server"
+    "pip install ruff"
 )
 
 ## LSPs installable with pipx
 $PipxLsps = @(
+    "pipx install jedi-language-server",
     "pipx install python-lsp-server",
     "pipx inject python-lsp-server python-lsp-ruff python-lsp-black"
 )
@@ -55,13 +55,13 @@ $RustLsps = @(
 
 ## LSPs installable with cargo
 $CargoLsps = @(
-    "cargo install taplo-cli --locked --features lsp",
-    "cargo install jql"
+    "cargo install taplo-cli --locked --features lsp"
 )
 
 ## LSPs installable with dotnet
 $DotnetLsps = @(
-    "dotnet tool install --global csharp-ls"
+    # OmniSharp requires manual installation from: https://github.com/OmniSharp/omnisharp-roslyn/releases
+    # Or install via scoop: scoop install omnisharp
 )
 
 ## Array of tools to check installation status for

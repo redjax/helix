@@ -31,10 +31,10 @@ go_lsps=(
 pip_lsps=(
     "pip install --user ruff-lsp"
     "pip install --user ruff"
-    "pip install --user jedi-language-server"
 )
 
 pipx_lsps=(
+    "pipx install jedi-language-server"
     "pipx install python-lsp-server"
     "pipx inject python-lsp-server python-lsp-ruff python-lsp-black"
 )
@@ -46,11 +46,11 @@ rustup_lsps=(
 
 cargo_lsps=(
     "cargo install taplo-cli --locked --features lsp"
-    "cargo install jql"
 )
 
 dotnet_lsps=(
-    "dotnet tool install --global csharp-ls"
+    # OmniSharp requires manual installation: https://github.com/OmniSharp/omnisharp-roslyn/releases
+    # Download and extract to ~/.local/bin/omnisharp or /usr/local/bin/omnisharp
 )
 
 tools=("npm" "go" "cargo" "rustup" "dotnet" "pip" "pipx")
