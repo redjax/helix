@@ -5,13 +5,13 @@ $NpmLsps = @(
     "npm i -g vscode-langservers-extracted",
     "npm install -g dockerfile-language-server-nodejs",
     "npm install -g @microsoft/compose-language-service",
-    "npm i -g vscode-langservers-extracted",
     "npm install pyright -g",
-    "npm i -g vscode-langservers-extracted",
     "npm i -g sql-language-server",
     "npm i -g @tailwindcss/language-server",
     "npm i -g @vue/language-server",
+    "npm i -g svelte-language-server",
     "npm i -g prettier",
+    "npm i -g prettier-plugin-svelte",
     "npm i -g yaml-language-server@next",
     "npm install -g typescript typescript-language-server",
     "npm install -g intelephense"
@@ -37,7 +37,8 @@ $ScoopLsps = @(
 ## LSPs installable with pip
 $PipLsps = @(
     "pip install ruff-lsp",
-    "pip install ruff"
+    "pip install ruff",
+    "pip install jedi-language-server"
 )
 
 ## LSPs installable with pipx
@@ -48,16 +49,20 @@ $PipxLsps = @(
 
 ## LSPs installable with rustup
 $RustLsps = @(
-    "rustup component add rust-analyzer"
+    "rustup component add rust-analyzer",
+    "rustup component add rustfmt"
 )
 
 ## LSPs installable with cargo
 $CargoLsps = @(
-    "cargo install taplo-cli --locked --features lsp"
+    "cargo install taplo-cli --locked --features lsp",
+    "cargo install jql"
 )
 
 ## LSPs installable with dotnet
-$DotnetLsps = @()
+$DotnetLsps = @(
+    "dotnet tool install --global csharp-ls"
+)
 
 ## Array of tools to check installation status for
 $tools = @("npm", "cargo", "rustup", "dotnet", "pip", "pipx")

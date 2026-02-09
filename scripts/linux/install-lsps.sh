@@ -13,7 +13,9 @@ npm_lsps=(
     "npm install -g sql-language-server"
     "npm install -g @tailwindcss/language-server"
     "npm install -g @vue/language-server"
+    "npm install -g svelte-language-server"
     "npm install -g prettier"
+    "npm install -g prettier-plugin-svelte"
     "npm install -g yaml-language-server@next"
     "npm install -g typescript typescript-language-server"
     "npm install -g intelephense"
@@ -31,6 +33,7 @@ go_lsps=(
 pip_lsps=(
     "pip install --user ruff-lsp"
     "pip install --user ruff"
+    "pip install --user jedi-language-server"
 )
 
 pipx_lsps=(
@@ -40,14 +43,16 @@ pipx_lsps=(
 
 rustup_lsps=(
     "rustup component add rust-analyzer"
+    "rustup component add rustfmt"
 )
 
 cargo_lsps=(
     "cargo install taplo-cli --locked --features lsp"
+    "cargo install jql"
 )
 
 dotnet_lsps=(
-    # Add dotnet LSPs here if needed
+    "dotnet tool install --global csharp-ls"
 )
 
 tools=("npm" "go" "cargo" "rustup" "dotnet" "pip" "pipx")
