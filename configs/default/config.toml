@@ -51,9 +51,9 @@ preview-completion-insert = true
 rulers = [120]
 ## Shell
 #  Linux
-# shell = ["bash", "-c"]
+shell = ["bash", "-c"]
 #  Windows
-shell = ["pwsh.exe", "-NoLogo", "-NoProfile", "-NoProfileLoadTime", "-Command", "$PSStyle.OutputRendering='PlainText';"]
+# shell = ["pwsh.exe", "-NoLogo", "-NoProfile", "-NoProfileLoadTime", "-Command", "$PSStyle.OutputRendering='PlainText';"]
 ## Force theme to show colors
 true-color = true
 
