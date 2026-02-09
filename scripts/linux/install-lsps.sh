@@ -1,6 +1,4 @@
-#!/bin/bash
-
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Define LSP install commands for each tool
 npm_lsps=(
